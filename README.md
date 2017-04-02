@@ -16,12 +16,14 @@ system or MY DOCUMENTS\makehuman\v1\data on windows.
 
 ## API reference
 
-In the reference, "G.app.mhapi" has been excluded. So "internals" actually means "G.app.mhapi.internals".
+In the reference, "G.app.mhapi.<namespace>" has been excluded. So the "getHuman()" call found on the "internals" page here is actuall called "G.app.mhapi.internals.getHuman()".
 
 * [assets](docs/assets.md): These are calls related to reading, parsing and manipulating assets.
 * [internals](docs/internals.md): These are calls which you would normally not need to make. They give you low-level access to internal MakeHuman objects. 
 * [locations](docs/locations.md): Gives you information about file and directory locations. 
 * [mesh](docs/mesh.md): Operations on and info about the mesh as such (ie direct access to vertices, edges and faces)
 * [modifiers](docs/modifiers.md): Gives you control and information about modifiers and targets.
+* [ui](docs/ui.md): Operations for constructing and manipulating the UI
 * [version](docs/version.md): Information about hg and the current makehuman version.
+* [viewport](docs/viewport.md): Operations for manipulating the viewport and the camera
 
