@@ -25,7 +25,7 @@ class Modifiers(NameSpace):
 
     def _threadSafeApplyAllTargets(self):
         algos3d.resetObj(self.human.meshData)
-        for (targetPath, morphFactor) in self.human.targetsDetailStack.iteritems():
+        for (targetPath, morphFactor) in self.human.targetsDetailStack.items():
             algos3d.loadTranslationTarget(self.human.meshData, targetPath, morphFactor, None, 0, 0)
         self.human._updateOriginalMeshCoords(self.human.meshData.name, self.human.meshData.coord)
         self.human.updateProxyMesh()
