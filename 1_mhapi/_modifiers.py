@@ -11,7 +11,6 @@ import log
 import os
 import algos3d
 import events3d
-from cStringIO import StringIO
 from core import G
 from codecs import open
 
