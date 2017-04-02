@@ -16,7 +16,7 @@ system or MY DOCUMENTS\makehuman\v1\data on windows.
 
 ## API reference
 
-In the reference, "G.app.mhapi.<namespace>" has been excluded. So the "getHuman()" call found on the "internals" page here is actuall called "G.app.mhapi.internals.getHuman()".
+In the reference, "G.app.mhapi._NAMESPACE_" has been excluded. So the "getHuman()" call found on the "internals" page here is actuall called "G.app.mhapi.internals.getHuman()".
 
 * [assets](docs/assets.md): These are calls related to reading, parsing and manipulating assets.
 * [internals](docs/internals.md): These are calls which you would normally not need to make. They give you low-level access to internal MakeHuman objects. 
