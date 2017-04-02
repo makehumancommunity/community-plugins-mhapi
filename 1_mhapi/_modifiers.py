@@ -60,7 +60,6 @@ class Modifiers(NameSpace):
 
     def getAppliedTargets(self):
         targets = dict()
-        print self.human.targetsDetailStack
         for target in self.human.targetsDetailStack.keys():
             paths = target.split('/data/targets/')
             targets[paths[1]] = self.human.targetsDetailStack[target]

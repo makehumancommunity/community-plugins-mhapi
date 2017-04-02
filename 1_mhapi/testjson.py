@@ -13,7 +13,7 @@ jsc.setParam("hej","hopp")
 jsc.setParam("abc",2)
 jsc.setData([ [1,2,3.3], [1,2,3], a ])
 
-print jsc.serialize()
+print(jsc.serialize())
 
 #js = "{\
 #  \"function\": \"testfunction\",\

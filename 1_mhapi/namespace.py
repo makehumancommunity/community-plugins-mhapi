@@ -7,7 +7,7 @@ from abc import *
 # When developing the API we want to get a continuous output of which
 # methods are called and within which namespace. Setting this to true
 # will print all such accessed to the console prompt
-api_tracing = True;
+api_tracing = False;
 
 class NameSpace:
 
@@ -34,5 +34,5 @@ class NameSpace:
             stack = inspect.stack()
             info["caller_class"] = str(stack[1][0].f_locals["self"].__class__)
 
-            print "TRACE {}.{}():{}".format(info["caller_name"], info["caller_method"], info["line_number"])
+            print("TRACE {}.{}():{}".format(info["caller_name"], info["caller_method"], info["line_number"]))
 

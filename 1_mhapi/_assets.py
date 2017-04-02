@@ -222,16 +222,13 @@ class Assets(NameSpace):
 
     def writeAssetFile(self, assetInfo, createBackup = True):
         if not assetInfo:
-            print "Cannot use None as assetInfo"
-            return False
+            raise ValueError('Cannot use None as assetInfo')
 
         ap = assetInfo["absolute path"]
         bak = ap + ".bak"
 
         if createBackup and os.path.isfile(ap):
             shutil.copy(ap,bak)
-
-        print ap
 
         with codecs.open(ap,'w','utf8') as f:
 
@@ -262,7 +259,6 @@ class Assets(NameSpace):
                     key = m.group(1)
 
                     if key in remainingKeys:
-                        print key + " is a normal key"
                         allowWrite = False
                         if not assetInfo[key] is None:
                             f.write(key + " " + assetInfo[key] + "\x0a")
@@ -270,7 +266,6 @@ class Assets(NameSpace):
                         remainingKeys.remove(key)
 
                     if key in remainingExtraKeys:
-                        print key + " is an extra key"
                         allowWrite = False
 
                         if not assetInfo[key] is None and len(assetInfo[key]) > 0 and not key in writtenExtraKeys:
@@ -287,7 +282,6 @@ class Assets(NameSpace):
                     key = m.group(1)
 
                     if key in remainingCommentKeys:
-                        print key + " is a comment key"
                         allowWrite = False
                         if not assetInfo[key] is None:
                             f.write("# " + key + " " + assetInfo[key] + "\x0a")
