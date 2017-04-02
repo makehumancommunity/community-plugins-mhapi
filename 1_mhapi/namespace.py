@@ -6,12 +6,20 @@ from abc import *
 
 # When developing the API we want to get a continuous output of which
 # methods are called and within which namespace. Setting this to true
-# will print all such accessed to the console prompt
+# will print all such accesses to the console prompt
 api_tracing = False;
 
-class NameSpace:
 
-    __metaclass__ = ABCMeta
+# This is needed because python 2 and 3 do not share any syntax for 
+# creating classes with metaclasses
+def classCompat(parent):
+    class uglyWorkaroundClass(parent):
+        def __new__(self, name):
+            return uglyWorkaroundClass(name)
+    return type.__new__(uglyWorkaroundClass,'uglyWorkaroundClass')
+
+
+class NameSpace(classCompat(ABCMeta)):
 
     def __init__(self):
         global api_tracing
@@ -35,4 +43,5 @@ class NameSpace:
             info["caller_class"] = str(stack[1][0].f_locals["self"].__class__)
 
             print("TRACE {}.{}():{}".format(info["caller_name"], info["caller_method"], info["line_number"]))
+
 
