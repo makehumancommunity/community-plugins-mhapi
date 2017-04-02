@@ -1,6 +1,6 @@
 # Version
 
-Information about hg and the current makehuman version.
+This namespace wraps all calls that are related to hg and MH version.
 
 ## getBranch()
 
@@ -12,13 +12,13 @@ Return the full textual representation of the Hg revision, for example 'r1604 (d
 
 ## getRevisionId()
 
-Returns the hash id of the current local revision as an integer, for example d48f36771cc0. If this is not possible to deduce, None is returned.
+Return the hash id of the Hg revision, for example 'd48f36771cc0'. If this is not possible to deduce, None is returned.
 
 ## getRevisionNumber()
 
 Returns the number of the current local revision as an integer, for example 1604. If this is not possible to deduce, None is returned.
 
-## getVersion()
+## getFullVersion()
 
 Returns the full textual description of the current version, for example 'MakeHuman unstable 20141120' or 'MakeHuman 1.0.2'.
 
@@ -29,5 +29,4 @@ Returns the numeric representation of the version number as cells in an array, f
 ## getVersionNumberAsString()
 
 Returns the string representation of the version number, for example '1.0.2'.
-
 

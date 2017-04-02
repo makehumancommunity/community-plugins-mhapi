@@ -1,13 +1,12 @@
 # Assets
 
-These are calls related to reading, parsing and manipulating assets.
+This namespace wraps all calls that are related to reading and managing assets.
 
 ## openAssetFile(path, strip = False)
 
-This opens an asset file and returns an [assetInfo](assetInfo.md) dict. If strip is set to True, the raw data is excluded from the dict. 
+Opens an asset file and returns a hash describing it
 
 ## writeAssetFile(assetInfo, createBackup = True)
 
 This (over)writes the asset file named in the assetInfo's "absolute path" key. If createBackup is set to True, any pre-existing file will be backed up to it's former name + ".bak"
-
 
