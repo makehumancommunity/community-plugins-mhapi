@@ -25,12 +25,12 @@ class Version(NameSpace):
             pass
 
     def getBranch(self):
-        """Returns the name of the current local code branch, for example 'default'."""
+        """Returns the name of the current local code branch, for example 'default'. If this is not possible to deduce, None is returned."""
         self.trace()
         return self.branch
 
     def getRevision(self):
-        """Return the full textual representation of the Hg revision, for example 'r1604 (d48f36771cc0)'."""
+        """Return the full textual representation of the Hg revision, for example 'r1604 (d48f36771cc0)'. If this is not possible to deduce, None is returned."""
         self.trace()
         if not self.rev:
             return None
@@ -41,12 +41,12 @@ class Version(NameSpace):
         return self.rev + " (" + self.revid + ")"
 
     def getRevisionId(self):
-        """Return the hash id of the Hg revision, for example 'd48f36771cc0'."""
+        """Return the hash id of the Hg revision, for example 'd48f36771cc0'. If this is not possible to deduce, None is returned."""
         self.trace()
         return self.revid
 
     def getRevisionNumber(self):
-        """Returns the number of the current local revision as an integer, for example 1604."""
+        """Returns the number of the current local revision as an integer, for example 1604. If this is not possible to deduce, None is returned."""
         self.trace()
         return self.rev
 

@@ -32,7 +32,7 @@ class Locations(NameSpace):
         return self.getUnicodeAbsPath(getpath.getSysPath(subpath))
 
     def getSystemDataPath(self,subpath = ""):
-        """Returns unicode-encoded absolut path to the location of the installation's "data" directory (as opposed to the user's data directory)"""
+        """Returns the unicode-encoded absolute path to the location of the user's "data" directory (as opposed to the installation's data directory). If subpath is given, assume that a subdirectory is indicated and return the combined path."""
         self.trace()
         return self.getUnicodeAbsPath(getpath.getSysDataPath(subpath))
 

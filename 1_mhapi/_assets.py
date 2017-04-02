@@ -221,6 +221,7 @@ class Assets(NameSpace):
 
 
     def writeAssetFile(self, assetInfo, createBackup = True):
+        """ This (over)writes the asset file named in the assetInfo's "absolute path" key. If createBackup is set to True, any pre-existing file will be backed up to it's former name + ".bak" """
         if not assetInfo:
             raise ValueError('Cannot use None as assetInfo')
 
