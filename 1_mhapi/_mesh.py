@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from namespace import NameSpace
+from .namespace import NameSpace
 
 class Mesh(NameSpace):
     """This namespace wraps call which works directly on mesh vertices, edges and faces."""

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from namespace import NameSpace
+from .namespace import NameSpace
 
 import gui3d
 import mh

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from namespace import NameSpace
+from .namespace import NameSpace
 
 class API(NameSpace):
 
@@ -9,27 +9,27 @@ class API(NameSpace):
         NameSpace.__init__(self)
         self.trace()
 
-        from _assets import Assets
+        from ._assets import Assets
         self.assets = Assets(self)
 
-        from _internals import Internals
+        from ._internals import Internals
         self.internals = Internals(self)
 
-        from _mesh import Mesh
+        from ._mesh import Mesh
         self.mesg = Mesh(self)
 
-        from _locations import Locations
+        from ._locations import Locations
         self.locations = Locations(self)
 
-        from _version import Version
+        from ._version import Version
         self.version = Version(self)
 
-        from _viewport import Viewport
+        from ._viewport import Viewport
         self.viewport = Viewport(self)
 
-        from _modifiers import Modifiers
+        from ._modifiers import Modifiers
         self.modifiers = Modifiers(self)
 
-        from _ui import UI
+        from ._ui import UI
         self.ui = UI(self)
 

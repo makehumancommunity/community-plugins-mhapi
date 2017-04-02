@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from namespace import NameSpace
+from .namespace import NameSpace
 
 class Viewport(NameSpace):
     """This namespace wraps calls which relate to the viewport (camera position etc)."""

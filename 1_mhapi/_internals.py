@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-from namespace import NameSpace
-from JsonCall import JsonCall
+from .namespace import NameSpace
+from .JsonCall import JsonCall
 
 from core import G
 

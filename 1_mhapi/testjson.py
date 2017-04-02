@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from JsonCall import JsonCall
+from .JsonCall import JsonCall
 
 a = dict()
 a["aaa"] = 1;
