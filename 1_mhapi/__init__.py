@@ -2,7 +2,7 @@
 
 __all__ = ["api","namespace","JsonCall"]
 
-from api import API
+from .api import API
 
 def load(app):
     app.mhapi = API(app)
