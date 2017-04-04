@@ -17,6 +17,12 @@ class Locations(NameSpace):
     def getUnicodeAbsPath(self,path):
         """Returns the abspath version of path, and ensures that it is correctly encoded"""
         ap = os.path.abspath(path)
+
+        # In later python versions, there is a path object model that
+        # could be investigated. Assume all is well in python 3 for now though
+        if self.api.utility.isPython3():
+            return ap
+
         en = sys.getfilesystemencoding()
         if isinstance(ap,unicode) or en == "UTF-8":
             # Assume we already have a valid UTF-8 string
