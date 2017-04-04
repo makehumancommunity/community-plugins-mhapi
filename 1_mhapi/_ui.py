@@ -7,13 +7,21 @@ import mh
 import gui
 import log
 
-from PyQt4 import QtGui
-from PyQt4 import QtCore
-from PyQt4.QtGui import *
-
 from progress import Progress
 
 from core import G
+
+import importlib
+import importlib.util
+
+if (importlib.util.find_spec("PySide") is not None):
+    from PySide import QtGui
+    from PySide import QtCore
+    from PySide.QtGui import *
+else:
+    from PyQt4 import QtGui
+    from PyQt4 import QtCore
+    from PyQt4.QtGui import *
 
 class ComboBox(QtGui.QComboBox, QtGui.QWidget):
 
@@ -54,7 +62,7 @@ class ComboBox(QtGui.QComboBox, QtGui.QWidget):
         self.onChangeMethod = onChange
 
     def _onChange(self):
-        log.debug("onChange")
+        #log.debug("onChange")
         if self.onChangeMethod:
             self.onChangeMethod(self.getCurrentItem())
 
