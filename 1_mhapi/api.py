@@ -33,3 +33,6 @@ class API(NameSpace):
         from ._ui import UI
         self.ui = UI(self)
 
+        from ._utility import Utility
+        self.utility = Utility(self)
+
