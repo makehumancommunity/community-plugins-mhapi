@@ -2,8 +2,6 @@
 
 from .namespace import NameSpace
 import sys
-import importlib
-import importlib.util
 
 class Utility(NameSpace):
     """This namespace wraps various calls which are convenient but not necessarily MH-specific."""
@@ -18,15 +16,22 @@ class Utility(NameSpace):
         if self.isPython3():
             import urllib.request
             self.urlrequest = urllib.request
+            import importlib
+            import importlib.util
+            self.hasPySide = (importlib.util.find_spec("PySide") is not None)
+            self.hasPyQt = (importlib.util.find_spec("PyQt4") is not None)
         else:
             import urllib2
             self.urlrequest = urllib2
+            import pkgutil
+            self.hasPySide = (pkgutil.find_loader("PySide") is not None)
+            self.hasPyQt = (pkgutil.find_loader("PyQt4") is not None)
 
     def isPySideAvailable(self):
-        return (importlib.util.find_spec("PySide") is not None)
+        return self.hasPySide
 
     def isPyQtAvailable(self):
-        pass
+        return self.hasPyQt
 
     def isPython3(self):
         return self.isPy3
