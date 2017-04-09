@@ -3,6 +3,8 @@
 from .namespace import NameSpace
 import sys
 
+from .logchannel import LogChannel
+
 class Utility(NameSpace):
     """This namespace wraps various calls which are convenient but not necessarily MH-specific."""
 
@@ -27,6 +29,8 @@ class Utility(NameSpace):
             self.hasPySide = (pkgutil.find_loader("PySide") is not None)
             self.hasPyQt = (pkgutil.find_loader("PyQt4") is not None)
 
+        self.logChannels = {}
+
     def isPySideAvailable(self):
         return self.hasPySide
 
@@ -39,4 +43,8 @@ class Utility(NameSpace):
     def getCompatibleUrlFetcher(self):
         return self.urlrequest
 
+    def getLogChannel(self,name,defaultLevel = 4, mirrorToMHLog = True):
+        if not name in self.logChannels:
+            self.logChannels[name] = LogChannel(name,defaultLevel,mirrorToMHLog)
+        return self.logChannels[name]
 
