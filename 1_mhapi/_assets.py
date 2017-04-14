@@ -17,6 +17,22 @@ class Assets(NameSpace):
         NameSpace.__init__(self)
         self.trace()
 
+        self.assetTypes = ["material",
+                           "model",
+                           "clothes",
+                           "hair",
+                           "teeth",
+                           "eyebrows",
+                           "eyelashes",
+                           "tongue",
+                           "eyes",
+                           "proxy",
+                           "skin",
+                           "pose",
+                           "expression",
+                           "rig",
+                           "target"]
+
         self.extensionToType = dict()
         self.extensionToType[".mhmat"] = "material"
         self.extensionToType[".mhclo"] = "proxy"
@@ -26,6 +42,7 @@ class Assets(NameSpace):
 
         self.typeToExtension = {'material'  :   'mhmat',
                                 'models'    :   'mhm',
+                                'model'     :   'mhm',
                                 'clothes'   :   'mhclo',
                                 'hair'      :   'mhclo',
                                 'teeth'     :   'mhclo',
@@ -33,8 +50,9 @@ class Assets(NameSpace):
                                 'eyelashes' :   'mhclo',
                                 'tongue'    :   'mhclo',
                                 'eyes'      :   'mhclo',
-                                'proxymeshes':  'proxy'
-        }
+                                'proxymeshes':  'proxy',
+                                'target'    :   'target',
+                                'skin'      :   'mhmat'}
         
         self.genericExtraKeys = ["tag"]
         self.genericKeys = ["name","description", "uuid"]
@@ -189,6 +207,56 @@ class Assets(NameSpace):
         assetInfo["pertinentExtraKeys"] = pertinentExtraKeys
         assetInfo["pertinentCommentKeys"] = pertinentCommentKeys
 
+    def assetTitleToDirName(self, assetTitle):
+        normalizedTitle = assetTitle.strip()
+        normalizedTitle = re.sub(r'_+', ' ', normalizedTitle)
+        normalizedTitle = normalizedTitle.strip()
+        normalizedTitle = re.sub(r'\s+', '_', normalizedTitle)
+        normalizedTitle = re.sub(r'[*:,\[\]/\\\(\)]+', '', normalizedTitle)
+        return normalizedTitle
+
+    def getAssetTypes(self):
+        """Returns a non-live list of known asset types"""
+        return list(self.assetTypes)
+
+    def getAssetLocation(self, assetTitle, assetType):
+        alreadyKosher = ["clothes",
+                         "hair",
+                         "teeth",
+                         "eyebrows",
+                         "eyelashes",
+                         "tongue",
+                         "eyes"]
+
+        needsPlural = ["material",
+                       "model",
+                       "skin",
+                       "pose",
+                       "expression",
+                       "rig"]
+
+        normalizedTitle = self.assetTitleToDirName(assetTitle)
+
+        if assetType in alreadyKosher:
+            root = self.api.locations.getUserDataPath(assetType)
+            return os.path.join(root,normalizedTitle)
+
+        if assetType in needsPlural:
+            root = self.api.locations.getUserDataPath(assetType + "s")
+            return os.path.join(root,normalizedTitle)
+
+        if assetType == "proxy":
+            return self.api.locations.getUserDataPath("proxymeshes")
+
+        if assetType == "target":
+            return self.api.locations.getUserDataPath("custom")
+
+        if assetType == "model":
+            return self.api.locations.getUserHomePath("models")
+
+        raise ValueError("Could not convert title to location for asset with type",assetType)
+
+        return None
 
     def openAssetFile(self, path, strip = False):
         """Opens an asset file and returns a hash describing it"""
@@ -218,7 +286,6 @@ class Assets(NameSpace):
             info.pop("rawcommentkeys",None)
 
         return info
-
 
     def writeAssetFile(self, assetInfo, createBackup = True):
         """ This (over)writes the asset file named in the assetInfo's "absolute path" key. If createBackup is set to True, any pre-existing file will be backed up to it's former name + ".bak" """
