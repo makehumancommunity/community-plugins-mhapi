@@ -7,7 +7,7 @@ from abc import *
 # When developing the API we want to get a continuous output of which
 # methods are called and within which namespace. Setting this to true
 # will print all such accesses to the console prompt
-api_tracing = True;
+api_tracing = False;
 
 
 # This is needed because python 2 and 3 do not share any syntax for 

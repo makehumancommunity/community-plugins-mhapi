@@ -2,6 +2,7 @@
 
 from .namespace import NameSpace
 import sys
+import os
 
 from .logchannel import LogChannel
 
@@ -43,8 +44,10 @@ class Utility(NameSpace):
     def getCompatibleUrlFetcher(self):
         return self.urlrequest
 
-    def getLogChannel(self,name,defaultLevel = 4, mirrorToMHLog = True):
-        if not name in self.logChannels:
+    def getLogChannel(self, name, defaultLevel=2, mirrorToMHLog=True):
+        if name not in self.logChannels:
+            if name in os.environ:
+                defaultLevel = int(os.environ[name])
             self.logChannels[name] = LogChannel(name,defaultLevel,mirrorToMHLog)
         return self.logChannels[name]
 
