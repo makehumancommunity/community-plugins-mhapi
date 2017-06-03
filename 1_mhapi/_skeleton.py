@@ -2,6 +2,13 @@
 
 from .namespace import NameSpace
 
+import getpath
+import bvh
+import json
+import animation
+
+from collections import OrderedDict
+
 class Skeleton(NameSpace):
     """This namespace wraps call which work with skeleton, rig, poses and expressions."""
 
@@ -37,6 +44,9 @@ class Skeleton(NameSpace):
         b.fromSkeleton(skeleton)
 
         return b
+
+    def getPoseAsAnimation(self):
+        return self.human.getActiveAnimation()
  
     def clearPoseAndExpression(self):
         """Put skeleton back into rest pose"""
@@ -50,8 +60,56 @@ class Skeleton(NameSpace):
 
     def setExpressionFromFile(self, mhposeFile):
         """Set the expression from a mhpose file"""
-        skeleton = self.getSkeleton()
-        pass
+
+        if mhposeFile is None:
+            # clear expression
+
+            original_pose = self.getPoseAsAnimation()
+            if original_pose and hasattr(original_pose, 'pose_backref'):
+                original_pose = original_pose.pose_backref
+    
+            if original_pose is None:
+                self.human.setActiveAnimation(None)
+            else:
+                if self.human.hasAnimation(original_pose.name):
+                    self.human.setActiveAnimation(original_pose.name)
+                else:
+                    self.human.addAnimation(original_pose)
+                    self.human.setActiveAnimation(orgiginal_pose.name)
+    
+            if self.human.hasAnimation('expr-lib-pose'):
+                self.human.removeAnimation('expr-lib-pose')
+        else:
+            # Assign expression
+            
+            base_bvh = bvh.load(getpath.getSysDataPath('poseunits/face-poseunits.bvh'), allowTranslation="none")
+            base_anim = base_bvh.createAnimationTrack(self.human.getBaseSkeleton(), name="Expression-Face-PoseUnits")
+
+            poseunit_json = json.load(open(getpath.getSysDataPath('poseunits/face-poseunits.json'),'r'), object_pairs_hook=OrderedDict)
+            poseunit_names = poseunit_json['framemapping']
+
+            base_anim = animation.PoseUnit(base_anim.name, base_anim._data, poseunit_names)
+
+            face_bone_idxs = sorted(list(set([bIdx for l in base_anim.getAffectedBones() for bIdx in l])))
+
+            new_pose = animation.poseFromUnitPose('expr-lib-pose', mhposeFile, base_anim)
+
+            current_pose = self.getPoseAsAnimation()
+
+            if current_pose is None:
+                current_pose = new_pose
+                current_pose.pose_backref = None
+            else:
+                if hasattr(current_pose,'pose_backref') and not current_pose.pose_backref is None:
+                    current_pose = current_pose.pose_backref
+                org_pose = current_pose
+                current_pose = animation.mixPoses(org_pose, new_pose, face_bone_idxs)
+
+            current_pose.name = 'expr-lib-pose'
+            self.human.addAnimation(current_pose)
+            self.human.setActiveAnimation(current_pose.name)
+            self.human.setPosed(True)
+            self.human.refreshPose()
 
     def _loadBvh(self, bvh_file_name):
         pass
