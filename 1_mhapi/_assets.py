@@ -31,7 +31,8 @@ class Assets(NameSpace):
                            "pose",
                            "expression",
                            "rig",
-                           "target"]
+                           "target",
+                           "node_setups_and_blender_specific"]
 
         self.extensionToType = dict()
         self.extensionToType[".mhmat"] = "material"
