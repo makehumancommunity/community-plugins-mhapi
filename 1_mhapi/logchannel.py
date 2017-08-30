@@ -16,8 +16,16 @@ class LogChannel():
 
     _levels = ["CRASH", "ERROR", "WARN ", "INFO ", "DEBUG", "TRACE"]
 
-    def __init__(self,name,defaultLevel = 4,mirrorToMHLog = True):
+    def __init__(self, name, defaultLevel = 2, mirrorToMHLog = False):
+
         self.name = name;
+
+        if name in os.environ and os.environ.get(name,"").isdigit():
+            defaultLevel = int(os.environ.get(name,"2"))
+
+        if "mirrorToMHLog" in os.environ and os.environ.get("mirrorToMHLog","") != "":
+            mirrorToMHLog = True
+
         self.level = defaultLevel;
         self.mirror = mirrorToMHLog
         self.api = gui3d.app.mhapi

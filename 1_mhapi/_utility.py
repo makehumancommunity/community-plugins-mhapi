@@ -44,10 +44,8 @@ class Utility(NameSpace):
     def getCompatibleUrlFetcher(self):
         return self.urlrequest
 
-    def getLogChannel(self, name, defaultLevel=2, mirrorToMHLog=True):
+    def getLogChannel(self, name, defaultLevel=2, mirrorToMHLog=False):
         if name not in self.logChannels:
-            if name in os.environ:
-                defaultLevel = int(os.environ[name])
             self.logChannels[name] = LogChannel(name,defaultLevel,mirrorToMHLog)
         return self.logChannels[name]
 
