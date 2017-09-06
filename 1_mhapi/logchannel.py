@@ -13,8 +13,9 @@ class LogChannel():
     INFO = 3
     DEBUG = 4
     TRACE = 5
+    SPAM = 6
 
-    _levels = ["CRASH", "ERROR", "WARN ", "INFO ", "DEBUG", "TRACE"]
+    _levels = ["CRASH", "ERROR", "WARN ", "INFO ", "DEBUG", "TRACE", "SPAM"]
 
     def __init__(self, name, defaultLevel = 2, mirrorToMHLog = False):
 
@@ -80,3 +81,5 @@ class LogChannel():
     def trace(self, message, item = None):
         self._logItem(self.TRACE,message,item)
 
+    def spam(self, message, item = None):
+        self._logItem(self.SPAM,message,item)
