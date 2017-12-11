@@ -4,6 +4,9 @@ import re
 import json
 import socket
 import numpy
+import sys
+from six import string_types
+
 
 # Why is the encoding routine even necessary? Why not simply use the 
 # json.dumps function already available in the imported json library?
@@ -15,6 +18,8 @@ import numpy
 # Also, this way we can avoid accidentally including internal 
 # makehuman data types (the encoding routine will croak on anything
 # that isn't scalar, array or dict)
+
+python3 = sys.version_info >= (3, 0)
 
 class JsonCall():
 
@@ -30,8 +35,10 @@ class JsonCall():
 
 
     def initializeFromJson(self,jsonData):
-
-        j = json.loads(str(jsonData, encoding='utf-8'))
+        if python3:
+            j = json.loads(str(jsonData, encoding='utf-8'))
+        else:
+            j = json.loads(jsonData)
         if not j:
             return
         self.function = j["function"]
@@ -79,25 +86,47 @@ class JsonCall():
 
     def _guessValueType(self,val):
 
-        if isinstance(val,bytes):
-            return "bytes"
+        if python3:
+            if isinstance(val,bytes):
+                return "bytes"
 
-        if isinstance(val,str):
+            if isinstance(val,str):
+                return "string"
+
+            if self._isDict(val):
+                return "dict"
+
+            if self._isArray(val):
+                return "array"
+
+            if self._isNumeric(val):
+                return "numeric"
+
+            if val == None:
+                return "none"
+
             return "string"
 
-        if self._isDict(val):
-            return "dict"
+        else:
+            if isinstance(val, string_types):
+                return "string"
 
-        if self._isArray(val):
-            return "array"
+            if isinstance(val, str):
+                return "string"
 
-        if self._isNumeric(val):
-            return "numeric"
+            if val == None:
+                return "none"
 
-        if val == None:
-            return "none"
+            if self._isDict(val):
+                return "dict"
 
-        return "string"
+            if self._isArray(val):
+                return "array"
+
+            if self._isNumeric(val):
+                return "numeric"
+
+            return "string"
 
 
     def _isArray(self,val):
@@ -228,5 +257,4 @@ class JsonCall():
             return JsonCall(data)
         else:            
             return None
-
 
