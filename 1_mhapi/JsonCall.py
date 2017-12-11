@@ -31,7 +31,7 @@ class JsonCall():
 
     def initializeFromJson(self,jsonData):
 
-        j = json.loads(str(jsonData, encoding='utf-8'))
+        j = json.loads(jsonData)
         if not j:
             return
         self.function = j["function"]
@@ -79,11 +79,14 @@ class JsonCall():
 
     def _guessValueType(self,val):
 
-        if isinstance(val,bytes):
-            return "bytes"
+        if isinstance(val,basestring):
+            return "string"
 
         if isinstance(val,str):
             return "string"
+
+        if val == None:
+            return "none"
 
         if self._isDict(val):
             return "dict"
@@ -93,9 +96,6 @@ class JsonCall():
 
         if self._isNumeric(val):
             return "numeric"
-
-        if val == None:
-            return "none"
 
         return "string"
 
@@ -166,12 +166,8 @@ class JsonCall():
 
         vType = self._guessValueType(val)
 
-        if vType == "none":
+        if val == None:
             return out + "null"
-
-        if vType == "bytes":
-            val = str(val, encoding='utf-8')
-            return out + "\"" + val.replace("\"", "\\\"") + "\""
 
         if vType == "string":
             return out + "\"" + val.replace("\"","\\\"") + "\""
@@ -189,7 +185,7 @@ class JsonCall():
 
 
     def serialize(self):
-        ret = "{\n"
+        ret = "{\n";
         ret = ret + "  \"function\": \"" + self.function + "\",\n"
         ret = ret + self.pythonValueToJsonValue(self.error,"error") + ",\n"
         ret = ret + "  \"params\": {\n"
@@ -227,6 +223,6 @@ class JsonCall():
         if data:
             return JsonCall(data)
         else:            
-            return None
+            return None;
 
 
