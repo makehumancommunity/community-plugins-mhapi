@@ -3,13 +3,15 @@
 import inspect
 import sys
 from abc import *
+from six import with_metaclass
 
 # When developing the API we want to get a continuous output of which
 # methods are called and within which namespace. Setting this to true
 # will print all such accesses to the console prompt
-api_tracing = False;
+api_tracing = False
 
-
+################### Can be deleted: ###################################
+'''
 # This is needed because python 2 and 3 do not share any syntax for 
 # creating classes with metaclasses
 def classCompat(parent):
@@ -17,9 +19,9 @@ def classCompat(parent):
         def __new__(self, name):
             return uglyWorkaroundClass(name)
     return type.__new__(uglyWorkaroundClass,'uglyWorkaroundClass')
+'''
 
-
-class NameSpace(classCompat(ABCMeta)):
+class NameSpace(with_metaclass(ABCMeta)):
 
     def __init__(self):
         global api_tracing
