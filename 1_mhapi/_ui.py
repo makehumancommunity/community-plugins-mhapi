@@ -16,14 +16,11 @@ import sys
 if sys.version_info >= (3,4):
     import importlib
     import importlib.util
-    if (importlib.util.find_spec("PySide") is not None):
-        from PySide import QtGui
-        from PySide import QtCore
-        from PySide.QtGui import *
-    else:
-        from PyQt4 import QtGui
-        from PyQt4 import QtCore
-        from PyQt4.QtGui import *
+    from PyQt5 import QtGui
+    from PyQt5 import QtCore
+    from PyQt5.QtGui import *
+    from PyQt5 import QtWidgets
+    from PyQt5.QtWidgets import *
 else:
     import pkgutil
     if (pkgutil.find_loader("PySide") is not None):
@@ -36,7 +33,7 @@ else:
         from PyQt4.QtGui import *
 
 
-class ComboBox(QtGui.QComboBox, QtGui.QWidget):
+class ComboBox(QComboBox, QWidget):
 
     onChangeMethod = None
 
