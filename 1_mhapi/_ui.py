@@ -81,8 +81,10 @@ class UI(NameSpace):
 
     def __init__(self,api):
         self.api = api
-        NameSpace.__init__(self)
+        NameSpace.__init__(self)        
         self.trace()
+        self.QtCore = QtCore
+        self.QtGui = QtGui
 
     def createWidget(self):
         return gui.Widget()
