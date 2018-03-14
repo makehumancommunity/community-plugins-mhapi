@@ -5,7 +5,6 @@ import json
 import socket
 import numpy
 import sys
-from six import string_types
 
 
 # Why is the encoding routine even necessary? Why not simply use the 
@@ -108,10 +107,11 @@ class JsonCall():
             return "string"
 
         else:
-            if isinstance(val, string_types):
-                return "string"
 
             if isinstance(val, str):
+                return "string"
+
+            if isinstance(val, unicode):
                 return "string"
 
             if val == None:
