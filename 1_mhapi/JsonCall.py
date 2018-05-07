@@ -92,6 +92,9 @@ class JsonCall():
             if isinstance(val,str):
                 return "string"
 
+            if val is None:
+                return "none"
+
             if self._isDict(val):
                 return "dict"
 
@@ -100,9 +103,6 @@ class JsonCall():
 
             if self._isNumeric(val):
                 return "numeric"
-
-            if val == None:
-                return "none"
 
             return "string"
 
@@ -114,7 +114,7 @@ class JsonCall():
             if isinstance(val, unicode):
                 return "string"
 
-            if val == None:
+            if val is None:
                 return "none"
 
             if self._isDict(val):
