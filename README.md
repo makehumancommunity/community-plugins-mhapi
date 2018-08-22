@@ -23,6 +23,7 @@ In the reference, "G.app.mhapi._NAMESPACE_" has been excluded. So the "getHuman(
 * [locations](docs/locations.md): Gives you information about file and directory locations. 
 * [mesh](docs/mesh.md): Operations on and info about the mesh as such (ie direct access to vertices, edges and faces)
 * [modifiers](docs/modifiers.md): Gives you control and information about modifiers and targets.
+* [skeleton](docs/skeleton.md): Operations concerning aspects of skeleton, such as rig, pose, expression and similar.
 * [ui](docs/ui.md): Operations for constructing and manipulating the UI
 * [version](docs/version.md): Information about hg and the current makehuman version.
 * [viewport](docs/viewport.md): Operations for manipulating the viewport and the camera

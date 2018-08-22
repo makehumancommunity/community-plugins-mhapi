@@ -35,4 +35,7 @@ class API(NameSpace):
 
         from ._utility import Utility
         self.utility = Utility(self)
+        
+        from ._skeleton import Skeleton
+        self.skeleton = Skeleton(self)
 
