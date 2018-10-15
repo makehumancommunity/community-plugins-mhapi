@@ -3,6 +3,9 @@
 from .namespace import NameSpace
 import sys
 import os
+import io
+import struct
+import inspect
 
 from .logchannel import LogChannel
 
@@ -15,6 +18,7 @@ class Utility(NameSpace):
         self.trace()
 
         self.isPy3 = (sys.version_info >= (3,0))
+        self.debugWriter = {}
 
         if self.isPython3():
             import urllib.request
@@ -48,4 +52,152 @@ class Utility(NameSpace):
         if name not in self.logChannels:
             self.logChannels[name] = LogChannel(name,defaultLevel,mirrorToMHLog)
         return self.logChannels[name]
+
+    def resetDebugWriter(self, channelName = "unsorted"):
+        self.debugWriter[channelName] = 0
+        debugDir = self.api.locations.getUserHomePath("debugWriter")
+        subPath = os.path.join( os.path.abspath(debugDir), channelName )
+        if not os.path.exists(subPath):
+            os.makedirs(subPath)
+        fnTxt = os.path.join(subPath, "textualContent.txt")
+        if os.path.exists(fnTxt):
+            os.remove(fnTxt)
+        fnTxt = os.path.join(subPath, "debugContent.txt")
+        if os.path.exists(fnTxt):
+            os.remove(fnTxt)
+
+    def _py3debugWrite(self, content, fnBin, fnTxt):
+        with open(fnBin, "wb") as f:
+            wasWritten = False
+            if isinstance(content, list):
+                for value in content:
+                    if isinstance(value, str):
+                        f.write( bytes(value, 'utf-8') )
+                    else:
+                        if isinstance(value, float):
+                            f.write( struct.pack("f", value) )
+                        else:
+                            f.write( bytes(value) )
+                wasWritten = True
+            if isinstance(content, str) and not wasWritten:
+                f.write( bytes(content, 'utf-8') )
+                wasWritten = True
+            if not wasWritten:
+                if isinstance(content, int):
+                    f.write( struct.pack(">I", content) )
+                else:
+                    f.write( bytes(content) )
+
+        with open(fnTxt, "a") as f:
+            wasWritten = False
+            if isinstance(content, list):
+                for value in content:
+                    if isinstance(value, bytes):
+                        f.write( value.decode('utf-8') )
+                    else:
+                        f.write( str(value) )
+                wasWritten = True
+            if isinstance(content, bytes) and not wasWritten:
+                f.write( content.decode('utf-8') )
+                wasWritten = True
+            if not wasWritten:
+                f.write( str(content) )
+
+            f.write("\n")
+
+    def _py2debugWrite(self, content, fnBin, fnTxt):
+        with open(fnBin, "wb") as f:
+            wasWritten = False
+            if isinstance(content, list):
+                for value in content:
+                    if isinstance(value, float):
+                        f.write( struct.pack("f", value) )
+                    else:
+                        f.write( bytes(value) )
+                wasWritten = True
+            if isinstance(content, float) and not wasWritten:
+                f.write( struct.pack("f", value) )
+                wasWritten = True
+            if not wasWritten:
+                f.write( bytes(content) )
+
+        with open(fnTxt, "a") as f:
+            wasWritten = False
+            if isinstance(content, list):
+                for value in content:
+                    if isinstance(value, bytes):
+                        f.write( value.decode('utf-8') )
+                    else:
+                        f.write( str(value) )
+                wasWritten = True
+            if isinstance(content, bytes) and not wasWritten:
+                f.write( content.decode('utf-8') )
+                wasWritten = True
+            if not wasWritten:
+                f.write( str(content) )
+
+            f.write("\n")
+
+
+    def debugWrite(self, content, channelName = "unsorted", location = "genericLocation"):
+        debugDir = self.api.locations.getUserHomePath("debugWriter")
+        subPath = os.path.join( os.path.abspath(debugDir), channelName )
+        if not os.path.exists(subPath):
+            os.makedirs(subPath)
+        increment = 0;
+        if channelName in self.debugWriter:
+            increment = self.debugWriter[channelName]
+        else:
+            self.debugWriter[channelName] = 0
+        increment = increment + 1
+        self.debugWriter[channelName] = increment
+        incrementStr = '{0:05d}'.format(increment)
+        fnBin = os.path.join(subPath, "bin-" + incrementStr + "-" + location + ".bin")
+        fnTxt = os.path.join(subPath, "textualContent.txt")
+
+        if self.isPy3:
+            self._py3debugWrite(content, fnBin, fnTxt)
+        else:
+            self._py2debugWrite(content, fnBin, fnTxt)
+
+        fnDebug = os.path.join(subPath, "debugContent.txt")
+        with open(fnDebug, "a") as f:
+            f.write(str(increment))
+            f.write("\n")
+
+            strtype = str(type(content))
+            if self.isPy3:
+                if isinstance(content, str):
+                    strtype = "str"
+                if isinstance(content, bytes):
+                    strtype = "str"
+            else:
+                if isinstance(content, str):
+                    strtype = "str"
+
+            if isinstance(content, int):
+                strtype = "int"
+
+            if isinstance(content, float):
+                strtype = "float"
+
+            f.write(strtype)
+            f.write("\n")
+
+            stack = inspect.stack()
+
+            i = len(stack) - 1
+
+            exclude = ["makehuman.py", "qtui.py", "qtgui.py", "mhmain.py"]
+
+            while i > 1:
+                (frame, filename, line_number, function_name, lines, index) = stack[i]
+                fn = os.path.basename(filename) 
+                if not fn in exclude:
+                    f.write(fn + " -> " + function_name)                
+                    f.write("\n")
+                i = i - 1
+
+            f.write("\n")
+
 
