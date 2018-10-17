@@ -28,6 +28,7 @@ class JsonCall():
         self.data = None
         self.function = "generic"
         self.error = ""
+        self.responseIsBinary = False
 
         if jsonData:
             self.initializeFromJson(jsonData)
