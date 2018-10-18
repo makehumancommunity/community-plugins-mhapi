@@ -372,3 +372,64 @@ class Assets(NameSpace):
                             f.write(key + " " + val + "\x0a")
 
         return True
+
+    def materialToHash(self, material):
+
+        output = {}
+
+        # colors
+
+        output["ambientColor"] = material.ambientColor.values
+        output["diffuseColor"] = material.diffuseColor.values
+        output["specularColor"] = material.specularColor.values
+        output["emissiveColor"] = material.emissiveColor.values
+
+        # textures
+
+        output["diffuseTexture"] = material.diffuseTexture
+        output["bumpMapTexture"] = material.bumpMapTexture
+        output["normalMapTexture"] = material.normalMapTexture
+        output["displacementMapTexture"] = material.displacementMapTexture
+        output["specularMapTexture"] = material.specularMapTexture
+        output["transparencyMapTexture"] = material.transparencyMapTexture
+        output["aoMapTexture"] = material.aoMapTexture
+
+        # texture intensities
+
+        output["bumpMapIntensity"] = material.bumpMapIntensity
+        output["normalMapIntensity"] = material.normalMapIntensity
+        output["displacementMapIntensity"] = material.displacementMapIntensity
+        output["specularMapIntensity"] = material.specularMapIntensity
+        output["transparencyMapIntensity"] = material.transparencyMapIntensity
+        output["aoMapIntensity"] = material.aoMapIntensity
+
+        # subsurface
+
+        output["sssEnabled"] = material.sssEnabled
+        output["sssRScale"] = material.sssRScale
+        output["sssGScale"] = material.sssGScale
+        output["sssBScale"] = material.sssBScale
+
+        # various
+
+        output["uvMap"] = material.uvMap
+        output["shininess"] = material.shininess
+        output["opacity"] = material.opacity
+        output["translucency"] = material.translucency
+        output["shadeless"] = material.shadeless
+        output["wireframe"] = material.wireframe
+        output["transparent"] = material.transparent
+        output["alphaToCoverage"] = material.alphaToCoverage
+        output["backfaceCull"] = material.backfaceCull
+        output["depthless"] = material.depthless
+        output["castShadows"] = material.castShadows
+        output["receiveShadows"] = material.receiveShadows
+        output["autoBlendSkin"] = material.autoBlendSkin
+
+        for key in output.keys():
+            if output[key] is None:
+                output[key] = ""
+
+        return output
+
+
