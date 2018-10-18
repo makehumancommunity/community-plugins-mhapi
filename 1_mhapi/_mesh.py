@@ -16,6 +16,35 @@ class Mesh(NameSpace):
         human = self.api.internals.getHuman()
         return human.mesh.coord
 
+    def getAllProxies(self, includeBaseMesh=False):
+        human = self.api.internals.getHuman()
+        return human.getProxies(includeBaseMesh)
+
+    def getCurrentProxy(self):
+        return self.api.internals.getHuman().proxy
+
+    def getCurrentHair(self):
+        return self.api.internals.getHuman().hairProxy
+
+    def getCurrentEyes(self):
+        return self.api.internals.getHuman().eyesProxy
+
+    def getCurrentEyebrows(self):
+        return self.api.internals.getHuman().eyebrowsProxy
+
+    def getCurrentEyelashes(self):
+        return self.api.internals.getHuman().eyelashesProxy
+
+    def getCurrentTeeth(self):
+        return self.api.internals.getHuman().teethProxy
+
+    def getCurrentTongue(self):
+        return self.api.internals.getHuman().tongueProxy
+
+    def getClothes(self):
+        human = self.api.internals.getHuman()
+        return list(human._clothesProxies.values())
+
     def getFaceGroupFaceIndexes(self):
         faceGroups = []
         faceGroups.append({"name": "body", "first": 0, "last": 13378})
