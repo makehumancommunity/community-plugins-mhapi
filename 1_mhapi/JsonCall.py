@@ -86,6 +86,9 @@ class JsonCall():
 
     def _guessValueType(self,val):
 
+        if isinstance(val, bool):
+            return "bool"
+
         if python3:
             if isinstance(val,bytes):
                 return "bytes"
@@ -162,7 +165,7 @@ class JsonCall():
 
 
     def _dictAsString(self,val):
-        ret = "{ "
+        ret = "{\n"
 
         first = True
 
@@ -170,7 +173,7 @@ class JsonCall():
             if first:
                 first = False
             else:
-                ret = ret + ", "
+                ret = ret + ",\n"
             ret = ret + self.pythonValueToJsonValue(val[key],key)
 
         return ret + " }"
@@ -196,6 +199,9 @@ class JsonCall():
 
         vType = self._guessValueType(val)
 
+        if vType == "bool":
+            return out + str(val).lower()
+        
         if vType == "none":
             return out + "null"
 
@@ -231,7 +237,7 @@ class JsonCall():
                 ret = ret + ",\n"
             else:
                 first = False
-            ret = ret + "    " + self.pythonValueToJsonValue(self.params[key],key) 
+            ret = ret + "    " + self.pythonValueToJsonValue(self.params[key],key)
 
         ret = ret + "\n  },\n"
 
