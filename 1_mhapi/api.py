@@ -16,7 +16,7 @@ class API(NameSpace):
         self.internals = Internals(self)
 
         from ._mesh import Mesh
-        self.mesg = Mesh(self)
+        self.mesh = Mesh(self)
 
         from ._locations import Locations
         self.locations = Locations(self)
