@@ -16,9 +16,9 @@ class Mesh(NameSpace):
         human = self.api.internals.getHuman()
         return human.mesh.coord
 
-    def getAllProxies(self, includeBaseMesh=False):
+    def getAllProxies(self, includeBodyProxy=False):
         human = self.api.internals.getHuman()
-        return human.getProxies(includeBaseMesh)
+        return human.getProxies(includeBodyProxy)
 
     def getCurrentProxy(self):
         return self.api.internals.getHuman().proxy
