@@ -158,8 +158,8 @@ class JsonCall():
 
 
     def _numberAsString(self,val):
-        if isinstance(val,float):
-            return "{0:.8f}".format(val)
+        if isinstance(val,float) or isinstance(val, numpy.float32) or isinstance(val, numpy.float64):
+            return "{0:.6f}".format(round(val,6))
         else:
             return str(val)
 
