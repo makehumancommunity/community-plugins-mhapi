@@ -377,6 +377,11 @@ class Assets(NameSpace):
 
         output = {}
 
+        # meta
+
+        output["name"] = material.name
+        output["description"] = material.description
+
         # colors
 
         output["ambientColor"] = material.ambientColor.values
