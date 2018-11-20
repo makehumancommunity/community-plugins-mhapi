@@ -179,13 +179,13 @@ def createSourceDebs():
 
   print("Copying source deb output to " + settings["source_final_dest"])
 
-  for f in glob.glob(settings["deb_staging_location"] + "/*ppa*"):
+  for f in glob.glob(settings["build_root"] + "/*ppa*"):
     print(f)                                                                                                                                        
     shutil.copy(f, settings["source_final_dest"])
 
   print("Copying source tarballs to " + settings["source_final_dest"])
 
-  for f in glob.glob(settings["deb_staging_location"] + "/*.orig.*"):
+  for f in glob.glob(settings["build_root"] + "/*.orig.*"):
     print(f)                                                                                                                                        
     shutil.copy(f, settings["source_final_dest"])
 
@@ -203,7 +203,7 @@ def createBinaryDebs():
 
   print("Copying deb files to " + settings["binary_final_dest"])
 
-  for f in glob.glob(settings["deb_staging_location"] + "/*.deb"):
+  for f in glob.glob(settings["build_root"] + "/*.deb"):
     print(f)                                                                                                                                        
     shutil.copy(f, settings["binary_final_dest"])
 
