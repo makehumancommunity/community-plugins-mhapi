@@ -8,7 +8,6 @@ Homepage: http://www.makehumancommunity.org
 
 Package: makehuman-community-plugins-mhapi
 Architecture: all
-Recommends: blender
 Depends: ${misc:Depends}, makehuman-community
 Description: The MHAPI library for MakeHuman.
  This library contains convenience calls for MakeHuman plugins. 
