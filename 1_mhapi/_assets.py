@@ -8,6 +8,8 @@ import sys
 import re
 import codecs
 import shutil
+import glob
+import fnmatch
 
 class Assets(NameSpace):
     """This namespace wraps all calls that are related to reading and managing assets."""
@@ -437,4 +439,22 @@ class Assets(NameSpace):
 
         return output
 
+    def getAvailableSystemSkins(self):
 
+        path = getpath.getSysDataPath("skins")
+        matches = []
+        for root, dirnames, filenames in os.walk(path):
+            for filename in fnmatch.filter(filenames, '*.mhmat'):
+                matches.append(os.path.join(root, filename))
+
+        return matches
+
+    def getAvailableUserSkins(self):
+
+        path = getpath.getDataPath("skins")
+        matches = []
+        for root, dirnames, filenames in os.walk(path):
+            for filename in fnmatch.filter(filenames, '*.mhmat'):
+                matches.append(os.path.join(root, filename))
+
+        return matches
