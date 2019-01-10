@@ -1,0 +1,15 @@
+Source: makehuman-community-plugins-mhapi
+Section: graphics
+Priority: optional
+Maintainer: Joel Palmius <joepal1976@hotmail.com>
+Build-Depends: devscripts, debhelper (>=9)
+Standards-Version: 3.9.5
+Homepage: http://www.makehumancommunity.org
+
+Package: makehuman-community-plugins-mhapi
+Architecture: all
+Depends: ${misc:Depends}, makehuman-community
+Description: The MHAPI library for MakeHuman.
+ This library contains convenience calls for MakeHuman plugins. 
+
+
