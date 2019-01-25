@@ -10,6 +10,10 @@ import codecs
 import shutil
 import glob
 import fnmatch
+import proxy
+import gui3d
+
+from core import G
 
 class Assets(NameSpace):
     """This namespace wraps all calls that are related to reading and managing assets."""
@@ -439,22 +443,115 @@ class Assets(NameSpace):
 
         return output
 
-    def getAvailableSystemSkins(self):
-
-        path = getpath.getSysDataPath("skins")
+    def _findMaterials(self,path):
         matches = []
         for root, dirnames, filenames in os.walk(path):
             for filename in fnmatch.filter(filenames, '*.mhmat'):
                 matches.append(os.path.join(root, filename))
+        return matches
+
+    def _findProxies(self,path):
+
+        basenames = []
+        matches = []
+        for root, dirnames, filenames in os.walk(path):
+            for filename in fnmatch.filter(filenames, '*.mhpxy'):
+                matches.append(os.path.join(root, filename))
+                basenames.append(os.path.basename(filename))
+
+        for root, dirnames, filenames in os.walk(path):
+            for filename in fnmatch.filter(filenames, '*.mhclo'):
+                bn = os.path.basename(filename)
+                if not bn in basenames:
+                    matches.append(os.path.join(root, filename))
 
         return matches
+
+    def getAvailableSystemSkins(self):
+        path = getpath.getSysDataPath("skins")
+        return self._findMaterials(path)
 
     def getAvailableUserSkins(self):
-
         path = getpath.getDataPath("skins")
-        matches = []
-        for root, dirnames, filenames in os.walk(path):
-            for filename in fnmatch.filter(filenames, '*.mhmat'):
-                matches.append(os.path.join(root, filename))
+        return self._findMaterials(path)
 
-        return matches
+    def getAvailableSystemHair(self):
+        path = getpath.getSysDataPath("hair")
+        return self._findProxies(path)
+
+    def getAvailableUserHair(self):
+        path = getpath.getDataPath("hair")
+        return self._findProxies(path)
+
+    def getAvailableSystemEyebrows(self):
+        path = getpath.getSysDataPath("eyebrows")
+        return self._findProxies(path)
+
+    def getAvailableUserEyebrows(self):
+        path = getpath.getDataPath("eyebrows")
+        return self._findProxies(path)
+
+    def getAvailableSystemEyelashes(self):
+        path = getpath.getSysDataPath("eyelashes")
+        return self._findProxies(path)
+
+    def getAvailableUserEyelashes(self):
+        path = getpath.getDataPath("eyelashes")
+        return self._findProxies(path)
+
+    def _equipProxy(self, category, tab, filename):
+        tv = self.api.ui.getTaskView(category, tab)
+        if tv is None:
+            raise ValueError("Could not find taskview " + str(category) + "/" + str(tab))
+        tv.proxyFileSelected(filename)
+
+    def _unequipProxy(self, category, tab, filename):
+        tv = self.api.ui.getTaskView(category, tab)
+        if tv is None:
+            raise ValueError("Could not find taskview " + str(category) + "/" + str(tab))
+        tv.proxyFileDeselected(filename)
+
+    def _getEquippedProxies(self, category, tab, onlyFirst=False):
+        tv = self.api.ui.getTaskView(category, tab)
+        if tv is None:
+            raise ValueError("Could not find taskview " + str(category) + "/" + str(tab))
+        ps = tv.selectedProxies
+
+        if onlyFirst:
+            if ps is None or len(ps) < 1:
+                return None
+            return ps[0].file
+        else:
+            ret = []
+            if ps is None:
+                return []
+            for p in ps:
+                ret.append(p.file)
+            return ret
+
+    def equipHair(self, mhclofile):
+        self._equipProxy("Geometries","Hair",mhclofile)
+
+    def unequipHair(self, mhclofile):
+        self._unequipProxy("Geometries", "Hair", mhclofile)
+
+    def getEquippedHair(self):
+        return self._getEquippedProxies("Geometries","Hair",onlyFirst=True)
+
+    def equipEyebrows(self, mhclofile):
+        self._equipProxy("Geometries", "Eyebrows", mhclofile)
+
+    def unequipEyebrows(self, mhclofile):
+        self._unequipProxy("Geometries", "Eyebrows", mhclofile)
+
+    def getEquippedEyebrows(self):
+        return self._getEquippedProxies("Geometries", "Eyebrows", onlyFirst=True)
+
+    def equipEyelashes(self, mhclofile):
+        self._equipProxy("Geometries", "Eyelashes", mhclofile)
+
+    def unequipEyelashes(self, mhclofile):
+        self._unequipProxy("Geometries", "Eyelashes", mhclofile)
+
+    def getEquippedEyelashes(self):
+        return self._getEquippedProxies("Geometries", "Eyelashes", onlyFirst=True)
