@@ -86,6 +86,25 @@ class UI(NameSpace):
         self.QtCore = QtCore
         self.QtGui = QtGui
 
+    def getAllCategories(self):
+        categories = []
+        for catName in G.app.categories.keys():
+            categories.append(G.app.categories[catName])
+        return categories
+
+    def getAllTaskViews(self):
+        taskviews = []
+        for category in self.getAllCategories():
+            taskNames = category.tasksByName.keys()
+            for taskName in taskNames:
+                taskView = category.tasksByName[taskName]
+                taskviews.append(taskView)
+        return taskviews
+
+    def getTaskView(self, categoryName, taskName):
+        category = G.app.categories[categoryName]
+        return category.tasksByName[taskName]
+
     def createWidget(self):
         return gui.Widget()
 
