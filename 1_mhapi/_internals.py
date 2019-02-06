@@ -33,7 +33,7 @@ In the vast majority of cases, you would benefit from first trying to find a rel
         return G.app.selectedHuman.getSkeleton()
 
     def numpyTypecodeToPythonTypeCode(self, numpyTypeCode):
-
+        """Get the python array type code that is closest to the given numpy type code."""
         if numpyTypeCode == "<f4":
             return "f"
 

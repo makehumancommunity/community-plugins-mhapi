@@ -16,3 +16,7 @@ Get the central app object.
 
 Get the human's skeleton, if any.
 
+## numpyTypecodeToPythonTypeCode(numpyTypeCode)
+
+Get the python array type code that is closest to the given numpy type code.
+
