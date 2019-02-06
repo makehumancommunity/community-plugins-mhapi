@@ -49,7 +49,7 @@ class Exports(NameSpace):
         return self.getExporterByClassname("ExporterFBX")
 
     def getDAEExporter(self):
-        return self.getExporterByClassname("ExporterDAE")
+        return self.getExporterByClassname("ExporterCollada")
 
     def getMHX2Exporter(self):
         return self.getExporterByClassname("ExporterMHX2")
