@@ -215,6 +215,7 @@ class Assets(NameSpace):
         assetInfo["pertinentCommentKeys"] = pertinentCommentKeys
 
     def assetTitleToDirName(self, assetTitle):
+        """Convert an asset title (as shown for example in a list) to a normalized file name"""
         normalizedTitle = assetTitle.strip()
         normalizedTitle = re.sub(r'_+', ' ', normalizedTitle)
         normalizedTitle = normalizedTitle.strip()
@@ -227,6 +228,7 @@ class Assets(NameSpace):
         return list(self.assetTypes)
 
     def getAssetLocation(self, assetTitle, assetType):
+        """Get the full normal (user) path for an asset based on its title and type"""
         alreadyKosher = ["clothes",
                          "hair",
                          "teeth",
@@ -262,8 +264,6 @@ class Assets(NameSpace):
             return self.api.locations.getUserHomePath("models")
 
         raise ValueError("Could not convert title to location for asset with type",assetType)
-
-        return None
 
     def openAssetFile(self, path, strip = False):
         """Opens an asset file and returns a hash describing it"""
@@ -380,7 +380,7 @@ class Assets(NameSpace):
         return True
 
     def materialToHash(self, material):
-
+        """Convert a material object to a hash containing all its settings"""
         output = {}
 
         # meta
@@ -468,42 +468,52 @@ class Assets(NameSpace):
         return matches
 
     def getAvailableSystemSkins(self):
+        """Get a list with full paths to all system skins (the MHMAT files)"""
         path = getpath.getSysDataPath("skins")
         return self._findMaterials(path)
 
     def getAvailableUserSkins(self):
+        """Get a list with full paths to all user skins (the MHMAT files)"""
         path = getpath.getDataPath("skins")
         return self._findMaterials(path)
 
     def getAvailableSystemHair(self):
+        """Get a list with full paths to all system hair (the MHCLO files)"""
         path = getpath.getSysDataPath("hair")
         return self._findProxies(path)
 
     def getAvailableUserHair(self):
+        """Get a list with full paths to all user hair (the MHCLO files)"""
         path = getpath.getDataPath("hair")
         return self._findProxies(path)
 
     def getAvailableSystemEyebrows(self):
+        """Get a list with full paths to all system eyebrows (the MHCLO files)"""
         path = getpath.getSysDataPath("eyebrows")
         return self._findProxies(path)
 
     def getAvailableUserEyebrows(self):
+        """Get a list with full paths to all user eyebrows (the MHCLO files)"""
         path = getpath.getDataPath("eyebrows")
         return self._findProxies(path)
 
     def getAvailableSystemEyelashes(self):
+        """Get a list with full paths to all system eyelashes (the MHCLO files)"""
         path = getpath.getSysDataPath("eyelashes")
         return self._findProxies(path)
 
     def getAvailableUserEyelashes(self):
+        """Get a list with full paths to all user eyelashes (the MHCLO files)"""
         path = getpath.getDataPath("eyelashes")
         return self._findProxies(path)
 
     def getAvailableSystemClothes(self):
+        """Get a list with full paths to all system clothes (the MHCLO files)"""
         path = getpath.getSysDataPath("clothes")
         return self._findProxies(path)
 
     def getAvailableUserClothes(self):
+        """Get a list with full paths to all user clothes (the MHCLO files)"""
         path = getpath.getDataPath("clothes")
         return self._findProxies(path)
 
@@ -538,41 +548,54 @@ class Assets(NameSpace):
             return ret
 
     def equipHair(self, mhclofile):
+        """Equip a MHCLO file with hair. This will automatically unequip previously equipped hair."""
         self._equipProxy("Geometries","Hair",mhclofile)
 
     def unequipHair(self, mhclofile):
+        """Unequip a MHCLO file with hair"""
         self._unequipProxy("Geometries", "Hair", mhclofile)
 
     def getEquippedHair(self):
+        """Get the currently equipped hair, if any"""
         return self._getEquippedProxies("Geometries","Hair",onlyFirst=True)
 
     def equipEyebrows(self, mhclofile):
+        """Equip a MHCLO file with eyebrows. This will automatically unequip previously equipped eyebrows."""
         self._equipProxy("Geometries", "Eyebrows", mhclofile)
 
     def unequipEyebrows(self, mhclofile):
+        """Unequip a MHCLO file with eyebrows"""
         self._unequipProxy("Geometries", "Eyebrows", mhclofile)
 
     def getEquippedEyebrows(self):
+        """Get the currently equipped eyebrows, if any"""
         return self._getEquippedProxies("Geometries", "Eyebrows", onlyFirst=True)
 
     def equipEyelashes(self, mhclofile):
+        """Equip a MHCLO file with eyelashes. This will automatically unequip previously equipped eyelashes."""
         self._equipProxy("Geometries", "Eyelashes", mhclofile)
 
     def unequipEyelashes(self, mhclofile):
+        """Unequip a MHCLO file with eyelashes"""
         self._unequipProxy("Geometries", "Eyelashes", mhclofile)
 
     def getEquippedEyelashes(self):
+        """Get the currently equipped eyelashes, if any"""
         return self._getEquippedProxies("Geometries", "Eyelashes", onlyFirst=True)
 
     def equipClothes(self, mhclofile):
+        """Equip a MHCLO file with clothes"""
         self._equipProxy("Geometries", "Clothes", mhclofile)
 
     def unequipClothes(self, mhclofile):
+        """Unequip a MHCLO file with clothes"""
         self._unequipProxy("Geometries", "Clothes", mhclofile)
 
     def getEquippedClothes(self):
+        """Get a list of all currently equipped clothes"""
         return self._getEquippedProxies("Geometries", "Clothes")
 
     def unequipAllClothes(self):
+        """Unequip all clothes"""
         for c in self.getEquippedClothes():
             self.unequipClothes(c)
