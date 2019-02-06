@@ -12,6 +12,9 @@ class API(NameSpace):
         from ._assets import Assets
         self.assets = Assets(self)
 
+        from ._exports import Exports
+        self.exports = Exports(self)
+
         from ._internals import Internals
         self.internals = Internals(self)
 
