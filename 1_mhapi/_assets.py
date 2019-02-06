@@ -499,6 +499,14 @@ class Assets(NameSpace):
         path = getpath.getDataPath("eyelashes")
         return self._findProxies(path)
 
+    def getAvailableSystemClothes(self):
+        path = getpath.getSysDataPath("clothes")
+        return self._findProxies(path)
+
+    def getAvailableUserClothes(self):
+        path = getpath.getDataPath("clothes")
+        return self._findProxies(path)
+
     def _equipProxy(self, category, tab, filename):
         tv = self.api.ui.getTaskView(category, tab)
         if tv is None:
@@ -555,3 +563,16 @@ class Assets(NameSpace):
 
     def getEquippedEyelashes(self):
         return self._getEquippedProxies("Geometries", "Eyelashes", onlyFirst=True)
+
+    def equipClothes(self, mhclofile):
+        self._equipProxy("Geometries", "Clothes", mhclofile)
+
+    def unequipClothes(self, mhclofile):
+        self._unequipProxy("Geometries", "Clothes", mhclofile)
+
+    def getEquippedClothes(self):
+        return self._getEquippedProxies("Geometries", "Clothes")
+
+    def unequipAllClothes(self):
+        for c in self.getEquippedClothes():
+            self.unequipClothes(c)
