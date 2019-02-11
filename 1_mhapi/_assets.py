@@ -437,6 +437,11 @@ class Assets(NameSpace):
         output["receiveShadows"] = material.receiveShadows
         output["autoBlendSkin"] = material.autoBlendSkin
 
+        # viewport color
+        if material.usesViewPortColor():
+            output["viewPortColor"] = material.viewPortColor.values
+            output["viewPortAlpha"] = material._viewPortAlpha
+
         for key in output.keys():
             if output[key] is None:
                 output[key] = ""
