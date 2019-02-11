@@ -150,7 +150,7 @@ class Utility(NameSpace):
                 wasWritten = True
             if not wasWritten:
                 if isinstance(content, int):
-                    f.write( struct.pack(">I", content) )
+                    f.write( struct.pack("<I", content) )
                 else:
                     f.write( bytes(content) )
 
