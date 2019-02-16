@@ -246,6 +246,10 @@ class Assets(NameSpace):
 
         normalizedTitle = self.assetTitleToDirName(assetTitle)
 
+        if assetType == "model":
+            root = self.api.locations.getUserHomePath("models")
+            return os.path.join(root, normalizedTitle)
+        
         if assetType in alreadyKosher:
             root = self.api.locations.getUserDataPath(assetType)
             return os.path.join(root,normalizedTitle)
