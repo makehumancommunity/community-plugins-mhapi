@@ -1,4 +1,4 @@
-# ComboBox(QtGui.QComboBox, QtGui.QWidget)
+# ComboBox(QComboBox, QWidget)
 
 ## setData(items)
 
@@ -15,6 +15,12 @@
 # UI
 
 This namespace wraps all calls that are related to working with the user interface.
+
+## getAllCategories()
+
+## getAllTaskViews()
+
+## getTaskView(categoryName, taskName)
 
 ## createWidget()
 

@@ -2,6 +2,10 @@
 
 This namespace wraps various calls which are convenient but not necessarily MH-specific.
 
+## getTypeAsString(content)
+
+## getValueAsString(content, newLinesIfComplex=False)
+
 ## isPySideAvailable()
 
 ## isPyQtAvailable()
@@ -10,5 +14,9 @@ This namespace wraps various calls which are convenient but not necessarily MH-s
 
 ## getCompatibleUrlFetcher()
 
-## getLogChannel(name,defaultLevel = 4, mirrorToMHLog = True)
+## getLogChannel(name, defaultLevel=2, mirrorToMHLog=False)
+
+## resetDebugWriter(channelName = "unsorted")
+
+## debugWrite(content, channelName = "unsorted", location = "genericLocation")
 

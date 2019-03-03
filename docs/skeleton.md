@@ -18,6 +18,8 @@ Return a dict containing all bone rotations
 
 Return a BVH object describing the current pose
 
+## getPoseAsAnimation()
+
 ## clearPoseAndExpression()
 
 Put skeleton back into rest pose
