@@ -387,10 +387,13 @@ class Assets(NameSpace):
         """Convert a material object to a hash containing all its settings"""
         output = {}
 
+        fn = os.path.abspath(material.filename)
+
         # meta
 
         output["name"] = material.name
         output["description"] = material.description
+        output["materialFile"] = fn
 
         # colors
 
@@ -449,6 +452,26 @@ class Assets(NameSpace):
         for key in output.keys():
             if output[key] is None:
                 output[key] = ""
+
+        definedKeys = []
+        for key in output:
+            definedKeys.append(str(key).lower())
+
+        with open(fn,'r') as f:
+            line = f.readline()
+            while line:
+                parsedLine = line.strip()
+                if parsedLine and not parsedLine.startswith("#") and not parsedLine.startswith("/"):
+                    match = re.search(r'^([a-zA-Z]+)\s+(.*)$', parsedLine)
+                    if match:
+                        key = match.group(1)
+                        value = match.group(2)
+                        if not key.lower() in definedKeys:
+                            # There was a key defined in the material file, but it has not been picked up
+                            # by MH. So we insert it in the produced hash and let the recipient decide
+                            # what to do with it, if anything
+                            output[key] = value
+                line = f.readline()
 
         return output
 
