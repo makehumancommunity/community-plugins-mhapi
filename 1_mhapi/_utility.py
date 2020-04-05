@@ -175,7 +175,7 @@ class Utility(NameSpace):
         subPath = os.path.join( os.path.abspath(debugDir), channelName )
         if not os.path.exists(subPath):
             os.makedirs(subPath)
-        increment = 0;
+        increment = 0
         if channelName in self.debugWriter:
             increment = self.debugWriter[channelName]
         else:

@@ -19,7 +19,7 @@ class LogChannel():
 
     def __init__(self, name, defaultLevel = 2, mirrorToMHLog = False):
 
-        self.name = name;
+        self.name = name
 
         if name in os.environ and os.environ.get(name,"").isdigit():
             defaultLevel = int(os.environ.get(name,"2"))
@@ -27,7 +27,7 @@ class LogChannel():
         if "mirrorToMHLog" in os.environ and os.environ.get("mirrorToMHLog","") != "":
             mirrorToMHLog = True
 
-        self.level = defaultLevel;
+        self.level = defaultLevel
         self.mirror = mirrorToMHLog
         self.api = gui3d.app.mhapi
 

@@ -23,7 +23,7 @@ if sys.version_info >= (3,4):
     from PyQt5.QtWidgets import *
 else:
     import pkgutil
-    if (pkgutil.find_loader("PySide") is not None):
+    if pkgutil.find_loader("PySide") is not None:
         from PySide import QtGui
         from PySide import QtCore
         from PySide.QtGui import *

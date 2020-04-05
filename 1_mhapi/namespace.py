@@ -7,13 +7,13 @@ from abc import *
 # When developing the API we want to get a continuous output of which
 # methods are called and within which namespace. Setting this to true
 # will print all such accesses to the console prompt
-api_tracing = False;
+api_tracing = False
 
 # The following is an ugly copy/paste, but since python2 and python3 
 # have different syntaxes regarding abstract base classes, this is 
 # the most stable solution
 
-if(sys.version_info >= (3,0)):
+if sys.version_info >= (3,0):
 
     class NameSpace(ABC):
     
@@ -27,7 +27,7 @@ if(sys.version_info >= (3,0)):
         # log function instead.
         def trace(self):
             if self.tracing:
-                info = dict();
+                info = dict()
     
                 stack = inspect.currentframe().f_back
                 info["line_number"] = str(stack.f_lineno)
@@ -56,7 +56,7 @@ else:
         # log function instead.
         def trace(self):
             if self.tracing:
-                info = dict();
+                info = dict()
     
                 stack = inspect.currentframe().f_back
                 info["line_number"] = str(stack.f_lineno)

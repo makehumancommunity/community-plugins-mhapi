@@ -148,10 +148,10 @@ class Assets(NameSpace):
 
         for line in info["rawlines"]:
             m = re.match(r"^([a-zA-Z_]+)\s+(.*)$",line)
-            if(m):
+            if m:
                 info["rawkeys"].append([m.group(1),m.group(2)])
             m = re.match(r"^#\s+([a-zA-Z_]+)\s+(.*)$",line)
-            if(m):
+            if m:
                 info["rawcommentkeys"].append([m.group(1),m.group(2)])
         
         for genericExtraKeyName in self.genericExtraKeys:
