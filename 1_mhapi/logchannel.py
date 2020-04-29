@@ -4,6 +4,7 @@ import log
 import os
 import gui3d
 import inspect
+import getpath
 
 class LogChannel():
 
@@ -38,8 +39,9 @@ class LogChannel():
 
         self.fileName = os.path.join(self.root,name + ".txt")
 
+        fnDecoded = getpath.pathToUnicode(self.fileName)
         with open(self.fileName,"wt") as f:
-            f.write("--- " + self.fileName + " ---\n\n")
+            f.write("--- " + fnDecoded + " ---\n\n")
 
     def _logItem(self,level,message,item):
         if level > self.level:
