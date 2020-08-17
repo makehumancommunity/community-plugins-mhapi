@@ -62,7 +62,7 @@ class Utility(NameSpace):
 
         # None of the listed types matched
 
-        with open("/tmp/missingtype.txt","a") as f:
+        with open("/tmp/missingtype.txt","a", encoding='utf-8') as f:
             f.write(str(type(content)))
             f.write("\n")
 
@@ -192,7 +192,7 @@ class Utility(NameSpace):
         else:
             self._py2debugWrite(content, fnBin, fnTxt)
 
-        with open(fnTxt, "a") as f:
+        with open(fnTxt, "a", encoding='utf-8') as f:
             f.write(str(increment))
             f.write("\n")
             val = self.getValueAsString(content, True)
@@ -200,7 +200,7 @@ class Utility(NameSpace):
             f.write("\n\n")
 
         fnDebug = os.path.join(subPath, "debugContent.txt")
-        with open(fnDebug, "a") as f:
+        with open(fnDebug, "a", encoding='utf-8') as f:
             f.write(str(increment))
             f.write("\n")
             f.write(self.getTypeAsString(content))
@@ -222,7 +222,7 @@ class Utility(NameSpace):
 
             f.write("\n")
 
-        with open(fnStack, "w") as f:
+        with open(fnStack, "w", encoding='utf-8') as f:
             f.write(str(increment))
             f.write("\n")
 

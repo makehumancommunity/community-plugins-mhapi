@@ -85,7 +85,7 @@ class Skeleton(NameSpace):
             base_bvh = bvh.load(getpath.getSysDataPath('poseunits/face-poseunits.bvh'), allowTranslation="none")
             base_anim = base_bvh.createAnimationTrack(self.human.getBaseSkeleton(), name="Expression-Face-PoseUnits")
 
-            poseunit_json = json.load(open(getpath.getSysDataPath('poseunits/face-poseunits.json'),'r'), object_pairs_hook=OrderedDict)
+            poseunit_json = json.load(open(getpath.getSysDataPath('poseunits/face-poseunits.json'), 'r', encoding='utf-8'), object_pairs_hook=OrderedDict)
             poseunit_names = poseunit_json['framemapping']
 
             base_anim = animation.PoseUnit(base_anim.name, base_anim._data, poseunit_names)

@@ -40,7 +40,7 @@ class LogChannel():
         self.fileName = os.path.join(self.root,name + ".txt")
 
         fnDecoded = getpath.pathToUnicode(self.fileName)
-        with open(self.fileName,"wt") as f:
+        with open(self.fileName,"wt", encoding='utf-8') as f:
             f.write("--- " + fnDecoded + " ---\n\n")
 
     def _logItem(self,level,message,item):
@@ -62,7 +62,7 @@ class LogChannel():
         if self.mirror:
             log.debug(outstr)
 
-        with open(self.fileName,"at") as f:
+        with open(self.fileName, "at",encoding='utf-8') as f:
             f.write(outstr + "\n")
 
     def crash(self, message, item = None):

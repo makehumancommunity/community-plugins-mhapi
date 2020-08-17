@@ -6,7 +6,6 @@ import getpath
 import os
 import sys
 import re
-import codecs
 import shutil
 import glob
 import fnmatch
@@ -138,7 +137,7 @@ class Assets(NameSpace):
         info["location"] = os.path.dirname(fullPath)
         info["parentdir"] = os.path.basename(info["location"])
 
-        with codecs.open(fullPath,'r','utf8') as f:
+        with open(fullPath, 'r', encoding='utf8') as f:
             contents = f.readlines()
             for line in contents:
                 info["rawlines"].append(re.sub(r"[\x0a\x0d]+",'',line))
@@ -309,7 +308,7 @@ class Assets(NameSpace):
         if createBackup and os.path.isfile(ap):
             shutil.copy(ap,bak)
 
-        with codecs.open(ap,'w','utf8') as f:
+        with open(ap, 'w', encoding='utf8') as f:
 
             stillNeedToDumpCommentKeys = True
 
@@ -457,7 +456,7 @@ class Assets(NameSpace):
         for key in output:
             definedKeys.append(str(key).lower())
 
-        with open(fn,'r') as f:
+        with open(fn, 'r', encoding='utf-8') as f:
             line = f.readline()
             while line:
                 parsedLine = line.strip()
