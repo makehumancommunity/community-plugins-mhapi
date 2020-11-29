@@ -35,8 +35,8 @@ class JsonCall():
 
 
     def initializeFromJson(self,jsonData):
-        if python3:
-            j = json.loads(str(jsonData, encoding='utf-8'))
+        if python3 and isinstance(jsonData, (str, bytes, bytearray)):
+            j = json.loads(jsonData)
         else:
             j = json.loads(jsonData)
         if not j:
