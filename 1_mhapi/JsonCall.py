@@ -94,7 +94,7 @@ class MHApiEncoder(json.JSONEncoder):
                 return obj.round(6).tolist()
 
         if isinstance(obj, bytes):
-            str(obj, encoding='utf-8')
+            return str(obj, encoding='utf-8')
 
         if isinstance(obj, float) or isinstance(obj, np.float32) or isinstance(obj, np.float64):
             return float(round(obj, 6))
